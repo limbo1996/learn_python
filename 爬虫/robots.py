@@ -4,7 +4,6 @@ Created on Thu Sep 19 14:54:52 2019
 ref = 《python3网络爬虫实战》
 @author: Limbo
 """
-
 #分析robots协议
 from urllib.robotparser import RobotFileParser
 rp = RobotFileParser()
