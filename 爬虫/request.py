@@ -63,4 +63,56 @@ print(r.text)
 #POST请求
 import requests
 data = {'name':'germey', 'age':'22'}
-r = requests.post
+r = requests.post('http://httpbin.org/post', data = data)
+print(r.text)
+
+#响应
+import requests
+r = requests.get('https://www.jianshu.com')
+print(type(r.status_code), r.status_code)
+print(type(r.headers), r.headers)
+print(type(r.cookies), r.cookies)
+#状态码常用来判断请求是否成功
+#requests内置了requests.codes这个对象方便用来检查状态码
+#requests.codes.ok为成功，状态码为200
+#requests.codes.not_found为404
+
+
+#cookies
+import requests
+
+r = requests.get('https://www.baidu.com')
+print(r.cookies)
+
+for key, value in r.cookies.items():
+    print(key + '=' + value)
+
+#会话维持
+#使用Session对象
+import requests
+requests.get('http://httpbin.org/cookies/set/number/123456789')
+r = requests.get('http://httpbin.org/cookies')
+print(r.text)#这样并没有保留cookies
+#使用Session
+s = requests.Session()
+s.get('http://httpbin.org/cookies/set/number/123456789')
+r = s.get('http://httpbin.org/cookies')
+print(r.text)
+#这样就保留了登录信息
+
+
+#超时设置
+#同样是timeout参数
+r = requests.get('http://taobao.com', timeout=1)
+print(r.status_code)
+
+#身份认证
+import requests
+from requests.auth import HTTPBasicAuth
+r = requests.get('http://localhost:5000', auth = HTTPBasicAuth('username', 'passwprd'))
+
+
+
+
+
+
