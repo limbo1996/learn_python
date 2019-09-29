@@ -149,7 +149,7 @@ def parse_one_page(html):#分析第一页
     
 def write_to_file(content):#写入文件
     with open('result.txt', 'a', encoding='utf-8') as f:
-        f.write(json.dump(content, ensure_ascii=False) + '\n')
+        f.write(json.dumps(content, ensure_ascii=False) + '\n')
 
 def main(offset):#读取其余页面
     url = 'http://maoyan.com/board/4?offset=' + str(offset)
@@ -164,15 +164,4 @@ if __name__ == '__main__':
         time.sleep(1)
 
 
-
-
-
-
-
-def main():
-    url = 'http://maoyan.com/board/4'
-    html = get_one_page(url)
-    print(html)
-
-main()
 
