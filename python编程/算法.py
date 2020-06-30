@@ -22,7 +22,6 @@ def factoria(n):
         return 1
     else:
         return n * factoria(n - 1)      #重复调用自身
-s
 ## 二分查找
 def binary_search(data, target, low, high):
     if low > high:
