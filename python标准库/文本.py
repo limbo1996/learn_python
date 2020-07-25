@@ -27,5 +27,18 @@ e = match.end()
 
 print('Found "{}"\nin "{}\nfrom {} to {} ("{}")'.format(
     match.re.pattern, match.string, s, e, text[s:e]))
+# 编译正则表达式
+regexes = [
+    re.compile(p) #此函数可以把p保存为一个RegexObject 对象
+    for p in ['this', 'that']]
 
+text = 'Does this text match pattern?'
 
+print('Texe: {!r}\n'.format(text))
+
+for regex in regexes:
+    print('Seeking "{}" ->'.format(regex.pattern))
+    if regex.search(text):
+        print('match!')
+    else:
+        print('not match')
