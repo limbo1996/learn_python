@@ -36,7 +36,7 @@ if __name__ == "__main__":
     
     
     
-    
+
     
 def newHTMLtext(url):
     try:
@@ -52,10 +52,14 @@ if __name__ == "__main__":
     print(newHTMLtext(url))
         
         
+    
+    
+    
+r = requests.head('http://httpbin.org/get')
+r.headers        
+r.text        
         
-        
-        
-        
+
         
         
         
