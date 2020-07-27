@@ -88,3 +88,26 @@ def getHTMLkv(url, keyword):
 
 ## 网络照片的爬取和储存
 
+```python
+import requests
+import os
+
+url = 'https://www.nationalgeographic.com/content/dam/animals/2020/07/glacier-bear/glacier-bear-111dscf0068.adapt.945.1.jpg'
+root = "D://pics//"
+path = root + url.split('/')[-1]
+
+try:
+    if not os.path.exists(root):
+        os.mkdir(root)
+    if not os.path.exists(path):
+        r = requests.get(url)
+        with open(path, "wb") as f:
+            f.write(r.content)
+            f.close()
+            print("文件保存成功")
+    else:
+        print("文件已存在")
+except:
+    print("链接失败")
+```
+
