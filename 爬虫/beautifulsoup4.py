@@ -41,26 +41,37 @@ soup.p
 # 注意判断是否是注释类型
 # comment 类型就是注释
 
+# 遍历标签
+# 遍历子节点
+# 
+soup = BeautifulSoup(demo, "html.parser")
+
+soup.head
+
+soup.head.contents
+soup.body.contents
+
+for i in soup.body.children:
+    print(i)
+
+# 上行遍历
+# .parent/.parents
+
+soup.title.parent
 
 
+# 平行遍历
+soup.a.next_sibling
+soup.a.next_sibling.next_sibling
+
+soup.a.previous_sibling
 
 
+# 格式输出
+demo
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+soup.prettify()
+print(soup.prettify())
 
 
 
