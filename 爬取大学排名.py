@@ -40,14 +40,22 @@ def fillUnivList(ulist, html): # 解析HTML内容
                           tds[2].string])
 
 def printUnivList(ulist, num):
-    print("{:^10}\t{:^5}\t{:^10}".format("排名", 
-                                         "学校名称",
-                                         "总分"))
+    '''
+    因为中文输出的对齐问题
+    产生这个问题的原因是因为，在中文字符输出完成但是没有占满时，系统自动用
+    西文字符填充，导致不对其，使用chr(12288)代表中文中的空格
+    '''
+    tplt = "{0:^10}\t{1:{3}^10}\t{2:^10}" #格式化输出信息，第二个替换中添加{3}代表使用format的第三个参数替换
+    print(tplt.format("排名", 
+                      "学校名称",
+                      "总分",
+                      chr(12288)))
     for i in range(num):
         u = ulist[i]
-        print("{:^10}\t{:^5}\t{:^10}".format(u[0],
-                                             u[1],
-                                             u[2]))
+        print(tplt.format(u[0],
+                          u[1],
+                          u[2],
+                          chr(12288)))
 
     
 def main():
