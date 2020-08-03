@@ -58,3 +58,8 @@ ls
 pat = re.compile(r'[1-9]\d{5}')# 将正则表达式编译为对象
 rst = pat.findall('BIT100081 TSU100084')
 rst
+
+
+# 最小匹配
+match = re.search(r'PY.?N', 'PYANBNCNDN')
+match.group(0) 
