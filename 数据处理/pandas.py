@@ -8,6 +8,7 @@ Created on Mon Aug 17 21:40:13 2020
 from pandas import Series, DataFrame
 import pandas as pd
 
+
 # 数组
 obj = Series([4,5,6])
 obj
@@ -24,4 +25,8 @@ obj2
 
 obj2[['v', 'a', 'd']]
 
-# 
+# 数组计算都会保留索引和值之间的链接
+obj2
+obj2[obj2 > 4]
+obj2 * 2
+np.exp(obj2)
