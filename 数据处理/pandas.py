@@ -144,3 +144,108 @@ frame
 3  Nevada  2001  2.4  -1.5
 4  Nevada  2002  2.9   NaN
 '''
+# 为不存在的列赋值会创建新列
+# del 可以用来删除列
+frame['debt'] = 15.7
+frame
+del frame['debt']
+frame
+'''
+    state  year  pop  debt
+0    Ohio  2000  1.5  15.7
+1    Ohio  2001  1.7  15.7
+2    Ohio  2002  3.6  15.7
+3  Nevada  2001  2.4  15.7
+4  Nevada  2002  2.9  15.7
+>>> del frame['debt']
+>>> frame
+    state  year  pop
+0    Ohio  2000  1.5
+1    Ohio  2001  1.7
+2    Ohio  2002  3.6
+3  Nevada  2001  2.4
+4  Nevada  2002  2.9
+'''
+# 注意索引返回的只是元数据的视图，并不是副本，对其的操作都会反映在元数据上，想要赋值，可以使用copy
+# 创建dataframe的另一个方法是使用嵌套字典
+# 嵌套字典的外部键会作为列名，内部键作为行名
+
+pop = {'Nevada' : {2001 : 2.4, 2202: 2.9},
+       'Ohio' : {2000 : 1.45, 2001 : 1.7, 2002 : 3.6}}
+pop
+
+frame2 = DataFrame(pop)
+frame2
+
+
+############################################################## 索引对象
+# 索引对象不可修改
+obj = Series(range(3), index = ['a', 'b', 'c'])
+
+index = obj.index
+
+index
+index[1:]
+
+index[1]= 'd'
+'''
+>>> index[1]= 'd'
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/home/limbo1996/miniconda3/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 4075, in __setitem__
+    raise TypeError("Index does not support mutable operations")
+TypeError: Index does not support mutable operations
+'''
+
+index = pd.Index(np.arange(3))
+
+obj = Series([1.5, -2.5, 0], index = index)
+obj
+
+#################################################基本功能
+# 重新索引
+# reindex
+obj = Series([4.5, 7.2, -5.3, 3.6], index = ['d', 'b', 'a', 'c'])
+obj
+'''
+d    4.5
+b    7.2
+a   -5.3
+c    3.6
+'''
+# 调用reindex会根据新索引重新排序，如果不存在数据，会引入NA
+obj2 = obj.reindex(['a', 'b', 'c', 'd', 'e'])
+obj2
+'''
+a   -5.3
+b    7.2
+c    3.6
+d    4.5
+e    NaN
+dtype: float64
+'''
+# method
+obj3 = Series(['blue', 'purple', 'yellow'], index = [0, 2, 4])
+
+obj3.reindex(range(6), method = 'ffill') # 向前填充， 向后填充bfill
+'''
+0      blue
+1      blue
+2    purple
+3    purple
+4    yellow
+5    yellow
+dtype: object
+'''
+
+# 使用reindex时，传入一个序列，默认重新索引行
+# 使用关键字， columns可以重新索引列
+
+frame = DataFrame(np.arange(9).reshape((3, 3)), index = ['a', 'c', 'd'],
+                  columns = ['Ohio', 'Texas', 'California'])
+
+frame
+
+
+
+
