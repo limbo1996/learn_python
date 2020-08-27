@@ -292,3 +292,51 @@ Name: b, dtype: int64
 frame.loc['b', 'Ohio'] # 提取标量
 frame.at['b', 'Ohio'] # 与上面等效，快速读取
 
+# 按位置选择
+frame
+frame.iloc[2] #选取第3行
+df = frame
+df.iloc[0:2, 1:3] # 用整数切片 
+df.iloc[[0, 2], [0, 2]]# 用整数列表切片
+# 整行和整列的切片和R不同，注意要有：
+df
+df.iloc[:, [0, 2]]# 获取1，3列的所有行
+# 列同理
+# 提取值
+df.iloc[1,1]
+# 快速访问标量，效果同上
+df.iat[1,1]
+
+# 布尔值索引
+
+df
+# 按照某一列来筛选数据
+df[df.Ohio > 1]
+# 选择整个数据中符合要求的值
+df[df > 4]
+
+# 用isin()筛选
+df2 = df.copy()
+df2
+df2['E'] = ['one', 'two', 'three', 'four', 'five']
+df2
+df2[df2['E'].isin(['two', 'four'])]
+# 赋值
+# 按照标签赋值
+df.at[1, 'state'] = 0
+df
+# 按照位置赋值
+df.iat[0, 1] = 0
+df
+df.loc[:, 'E'] = np.array([5] * len(df))
+df
+
+
+
+df2 = df.copy()
+df2
+test = df2.loc[:, ['pop', 'E']]
+test
+# 将大于3的取负号
+test[test > 3]  = -test
+test
