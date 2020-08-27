@@ -472,3 +472,10 @@ two   A       NaN -0.659834
       B  0.441308       NaN
       C       NaN -0.511366
 '''
+# 数据的的类别型 有点像R中的因子
+df = pd.DataFrame({'id' : range(6),
+                   "raw_grade" : ['a', 'b', 'b', 'a', 'a', 'e']})
+
+df
+df['grade'] = df["raw_grade"].astype("category")
+df["grade"]
