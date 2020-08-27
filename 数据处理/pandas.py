@@ -376,3 +376,52 @@ s.value_counts()
 0    1
 dtype: int64
 '''
+# 字符串
+ s = pd.Series(['A', 'B', 'C', 'Aaba', 'Baca', np.nan, 'CABA', 'dog', 'cat'])
+ s
+ # 转化为小写
+ s.str.lower()
+
+
+#########################################
+#数据连接
+df = pd.DataFrame(np.random.randn(10, 4))
+df
+# 分解
+pieces = [df[:3], df[3:7], df[7:]]
+pieces
+
+pd.concat(pieces) #类似于R中的rbind
+
+# join
+left = pd.DataFrame({'key': ['foo', 'foo'], 'lval': [1, 2]})
+
+
+right = pd.DataFrame({'key': ['foo', 'foo'], 'rval': [4, 5]})
+
+
+left
+right
+pd.merge(left, right, on = 'key')
+# 注意一样的key会两两结合所以会产生四行
+left = pd.DataFrame({'key': ['foo', 'bar'], 'lval': [1, 2]})
+right = pd.DataFrame({'key': ['foo', 'bar'], 'rval': [4, 5]})
+
+pd.merge(left, right, on = 'key') # 这样就产生两行
+
+
+# append追加
+df = pd.DataFrame(np.random.randn(8, 4), columns=['A', 'B', 'C', 'D'])
+df
+s = df.iloc[3] #第三行
+s
+
+df.append(s, ignore_index = True) # 忽略index追加到最后一行，否则最后的index就是3
+# 
+
+
+
+
+
+
+
