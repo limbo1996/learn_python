@@ -227,7 +227,7 @@ dtype: float64
 # method
 obj3 = Series(['blue', 'purple', 'yellow'], index = [0, 2, 4])
 
-obj3.reindex(range(6), method = 'ffill') # 向前填充， 向后填充bfill
+obj3.reindex(range(6), method = 'ffill') # 前向填充， 后向填充bfill
 '''
 0      blue
 1      blue
@@ -246,6 +246,49 @@ frame = DataFrame(np.arange(9).reshape((3, 3)), index = ['a', 'c', 'd'],
 
 frame
 
-
-
+frame2 = frame.reindex(['a', 'b', 'c', 'd'])
+frame2
+'''
+>>> frame
+   Ohio  Texas  California
+a     0      1           2
+c     3      4           5
+d     6      7           8
+>>> frame2 = frame.reindex(['a', 'b', 'c', 'd'])
+>>> frame2
+   Ohio  Texas  California
+a   0.0    1.0         2.0
+b   NaN    NaN         NaN
+c   3.0    4.0         5.0
+d   6.0    7.0         8.0
+'''
+states = ['Texas', 'Utah', 'California']
+frame2 = frame2.reindex(columns = states)
+frame2
+'''
+   Texas  Utah  California
+a    1.0   NaN         2.0
+b    NaN   NaN         NaN
+c    4.0   NaN         5.0
+d    7.0   NaN         8.0
+'''
+frame.index = ['b', 'c', 'd']
+frame.reindex(index = ['a', 'b', 'c', 'd'])
+frame.columns
+for col in frame.columns:
+    print(col)
+frame
+# 数据选取
+# 按标签选择
+frame.loc['c'] #提取一行
+frame.loc[:, ['Ohio', 'Texas']] # 提取多列
+frame.loc['b':'c', ['Ohio', 'Texas']] # 提取行和列
+frame.loc['b', ['Ohio', 'Texas']] # 返回数据降维
+'''
+Ohio     0
+Texas    1
+Name: b, dtype: int64
+'''
+frame.loc['b', 'Ohio'] # 提取标量
+frame.at['b', 'Ohio'] # 与上面等效，快速读取
 
