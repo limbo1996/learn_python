@@ -417,11 +417,58 @@ s = df.iloc[3] #第三行
 s
 
 df.append(s, ignore_index = True) # 忽略index追加到最后一行，否则最后的index就是3
-# 
+# 分组
+# 有分割 应用 组合
+df = pd.DataFrame({'A': ['foo', 'bar', 'foo', 'bar',
+                             'foo', 'bar', 'foo', 'foo'],
+                       'B': ['one', 'one', 'two', 'three',
+                             'two', 'two', 'one', 'three'],
+                       'C': np.random.randn(8),
+                       'D': np.random.randn(8)})
+
+df
+
+# 分组后求和
+df.groupby('A').sum()
+# 按照多种分组
+df.groupby(['A', 'B']).sum()
+
+# 透视
+# 长宽列表转换
+df = pd.DataFrame({'A': ['one', 'one', 'two', 'three'] * 3,
+                       'B': ['A', 'B', 'C'] * 4,
+                       'C': ['foo', 'foo', 'foo', 'bar', 'bar', 'bar'] * 2,
+                       'D': np.random.randn(12),
+                       'E': np.random.randn(12)})
 
 
-
-
-
-
-
+df
+'''
+        A  B    C         D         E
+0     one  A  foo -0.355625 -0.074833
+1     one  B  foo  1.172245 -0.499640
+2     two  C  foo -0.511366 -0.502507
+3   three  A  bar  0.833089  1.452084
+4     one  B  bar  0.536015 -0.318708
+5     one  C  bar  0.739397  0.321931
+6     two  A  foo -0.659834 -2.460920
+7   three  B  foo  0.876201  0.630652
+8     one  C  foo -1.109514  1.074370
+9     one  A  bar  0.009602  0.991574
+10    two  B  bar  0.441308  1.174960
+11  three  C  bar  1.066730 -0.624623
+'''
+pd.pivot_table(df, values = 'D', index = ['A', 'B'], columns = ['C'])
+'''
+C             bar       foo
+A     B                    
+one   A  0.009602 -0.355625
+      B  0.536015  1.172245
+      C  0.739397 -1.109514
+three A  0.833089       NaN
+      B       NaN  0.876201
+      C  1.066730       NaN
+two   A       NaN -0.659834
+      B  0.441308       NaN
+      C       NaN -0.511366
+'''
