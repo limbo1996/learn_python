@@ -340,3 +340,14 @@ test
 # 将大于3的取负号
 test[test > 3]  = -test
 test
+
+# 缺失值
+# 用 np.nan来表示缺失值
+test = test[test > 3]
+test
+# 删除含有NA的行
+test.dropna(how = 'any')
+# 填补缺失值
+test.fillna(value = 5)
+# 判断是否是NA
+pd.isna(test)
