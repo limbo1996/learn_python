@@ -36,3 +36,20 @@ s.array
 s.index.array
 df.index.array
 df.columns.array
+
+# 匹配和广播机制
+df = pd.DataFrame({
+        'one': pd.Series(np.random.randn(3), index=['a', 'b', 'c']),
+        'two': pd.Series(np.random.randn(4), index=['a', 'b', 'c', 'd']),
+        'three': pd.Series(np.random.randn(3), index=['b', 'c', 'd'])})
+
+df
+
+row = df.iloc[1]
+row
+df.sub(row, axis = 'columns')# 所有行减去row
+# or
+df.sub(row, axis = 1) # 行是1， 列是0
+# 减去列同理
+# 此外还有多种方法，add sub mul div, radd等等
+df.mul(row, axis = 1) # 乘
