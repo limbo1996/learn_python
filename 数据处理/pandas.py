@@ -351,3 +351,28 @@ test.dropna(how = 'any')
 test.fillna(value = 5)
 # 判断是否是NA
 pd.isna(test)
+
+# 运算
+# 计算列的平均值
+test.mean()
+# 计算行的
+test.mean(1)
+test
+# apply函数
+# 计算累积
+test.apply(np.cumsum)
+
+test.apply(lambda x: x.max() + x.min())
+
+
+s = pd.Series(np.random.randint(0, 7, size = 10))
+s
+# 计算每个值出现了多少次
+s.value_counts()
+'''
+5    3
+3    3
+2    3
+0    1
+dtype: int64
+'''
