@@ -85,3 +85,45 @@ for color in colors:
         print((color, size))
         
         
+
+## 生成器表达式
+
+tuple(ord(symbol) for symbol in symbols)
+
+# 笛卡尔积
+((c, s) for c in colors
+        for s in sizes)
+
+for tShirt in ((c, s) for c in colors
+                        for s in sizes):
+    print(tShirt)
+
+
+# 元组和记录
+
+lax_coordinates = (33.9425, -118.408)
+latitude, longitude = lax_coordinates
+latitude
+longitude
+
+
+divmod(20, 8) # return (x//y, x%%y)
+
+t = (20, 8)
+divmod(*t)
+
+x, y = divmod(*t)
+x
+y
+x, y
+
+
+import os
+_, file = os.path.split("~/test/test.py")
+file
+
+# 用*来处理不确定的元素
+
+a, b, *rest = range(5)
+
+a, b, rest

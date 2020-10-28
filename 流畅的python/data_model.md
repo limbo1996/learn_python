@@ -1,7 +1,7 @@
 <!--
  * @Author: limbo1996
  * @Date: 2020-10-28 19:42:32
- * @LastEditTime: 2020-10-28 20:39:14
+ * @LastEditTime: 2020-10-28 22:30:32
  * @FilePath: /learn_python/流畅的python/data_model.md
 -->
 # Python 数据模型
@@ -165,3 +165,89 @@ tshirts = [(color, size) for color in colors for size in sizes]
 ```
 列表推导式的作用就是生成列表。
 如果要生成其他类型的序列，要用到生成器表达式
+
+
+### 生成器表达式
+虽然列表推导式也能用来初始化元组，数组或者其他的序列类型。但是用生成器表达式是更好的选择。因为会节省内存
+
+生成器表达式的语法和列表推导式的语法相似，只是把方括号换成圆括号。
+```{python}
+
+tuple(ord(symbol) for symbol in symbols)
+
+(36, 37, 35, 64, 64, 42, 64, 35, 38)
+# 笛卡尔积
+((c, s) for c in colors
+        for s in sizes)
+```
+笛卡尔积返回的是生成器
+
+```{python}
+>>> for tshirt in ((c, s) for c in colors
+...                         for s in sizes):
+...     print(tshirt)
+... 
+('black', 'S')
+('black', 'M')
+('black', 'L')
+('white', 'S')
+('white', 'M')
+('white', 'L')
+```
+生成器会逐个的产生元素，而不是一次产生含有6个元素的列表
+
+### 元组不仅仅是不可变的列表
+把元组简单理解成“不可变的列表”并没有完全概括元组的全部特征。
+元组还可以作为没有字段名的记录。
+#### 元组和记录
+元组其实是对数据的记录：元组中的每一个元素都存放了记录中一个字段的数据，外加这个字段的位置。
+
+#### 元组拆包
+最好辨认的元组拆包就是**平行赋值**
+```{python}
+>>> lax_coordinates = (33.9425, -118.408)
+>>> latitude, longitude = lax_coordinates
+>>> latitude
+33.9425
+>>> longitude
+-118.408
+```
+还可以使用`*`运算符来把一个可迭代对象拆开作为函数的参数
+```{python}
+>>> divmod(20, 8) # return (x//y, x%%y)
+(2, 4)
+>>> t = (20, 8)
+>>> divmod(*t)
+(2, 4)
+>>> x, y = divmod(*t)
+>>> x
+2
+>>> y
+4
+>>> x, y
+(2, 4)
+```
+
+元组拆包的另一个用法就是让函数以元组的形式返回多个值，然后调用函数的代码接受这些值
+```{python}
+>>> import os
+>>> os.path.split("~/test/test.py")
+('~/test', 'test.py')
+>>> _, file = os.path.split("~/test/test.py")
+>>> file
+'test.py'
+```
+通过占位符`_`抛弃不用的元素。
+除此之外，元组拆包中使用`*`也可以帮助我们关注元组的部分元素。
+#### 用`*`来处理剩下的元素
+```{python}
+>>> a, b, *rest = range(5)
+>>> a, b, rest
+(0, 1, [2, 3, 4])
+```
+类似于函数用`*arg`来获取不确定参数
+`*`只能在一个变量前面，但是这个变量可以在赋值表达式的任意地方
+
+
+
+
