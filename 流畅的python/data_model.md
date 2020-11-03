@@ -1,7 +1,7 @@
 <!--
  * @Author: limbo1996
  * @Date: 2020-10-28 19:42:32
- * @LastEditTime: 2020-10-28 22:30:32
+ * @LastEditTime: 2020-11-02 23:32:25
  * @FilePath: /learn_python/流畅的python/data_model.md
 -->
 # Python 数据模型
@@ -249,5 +249,127 @@ tuple(ord(symbol) for symbol in symbols)
 `*`只能在一个变量前面，但是这个变量可以在赋值表达式的任意地方
 
 
+### 切片
+可以以`s[a:b:c]`的形式切片， 指从`a`到`b`隔`c`取值， c是负数就是反向取值。
+
+```{python}
+invoice = """
+0.....6.................................40...........52..55........
+1909  Pimoroni PiBrella                 $17.50       3   $52.50    
+1489  6mm Tactile Switch *20             $4.85       2    $9.90    
+1510  Panavise Jr. - PV-201             $28.00       1   $28.00    
+1601  PiTFT Mini Kit 320*240            $34.95       1   $34.95
+"""
+    
+line_items = invoice.split('\n')[2:]
+
+UNIT_PRICE = slice(40, 52)
+DESCRIPTION = slice(6, 40)
+
+for item in line_items:
+    print(item[UNIT_PRICE], item[DESCRIPTION])
+
+$17.50       Pimoroni PiBrella                 
+ $4.85       6mm Tactile Switch *20            
+$28.00       Panavise Jr. - PV-201             
+$34.95       PiTFT Mini Kit 320*240  
+```
 
 
+#### 对切片赋值
+```{python}
+>>> l = list(range(10))
+>>> l
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+>>> l[2:5] = [20, 30]
+>>> l
+[0, 1, 20, 30, 5, 6, 7, 8, 9]
+>>> l[6:8] = [100]
+>>> l
+[0, 1, 20, 30, 5, 6, 100, 9]
+```
+
+当赋值长度小于切片长度时，系列会自动缩短。
+如`l[2:5] = [20, 30]`, `4`被自动删除了
+如果赋值对象是一个切片，那赋值语句右边也要是可迭代对象。就算只有一个值，也要转换为可迭代序列。
+
+
+python的`*`是值得复制多个对象并拼接起来
+```{python}
+>>> ['_'] * 3
+['_', '_', '_']
+>>> "_" * 3
+'___'
+>>> 'a'*3
+'aaa'
+```
+```
+# 列表推导式的应用
+board = [['_'] * 3 for i in range(3)]
+
+board
+# 以上代码等同于
+board = []
+for i in range(3):
+    row = ['_'] * 3
+    board.append(row)
+    
+board
+board[1][2] = '0'
+board
+
+# 与之相反，错误的是
+row = ['_'] * 3
+board = []
+for i in range(3):
+    board.append(row)
+    
+board
+board[1][2] = '2'
+board
+'''
+虽然board的结果相似，但是第二个是追加同一个对象三次到board
+单第一个是每次创建一个列表对象到board, 从更改某一行的某一个元素的结果就可以看出来
+'''
+```
+
+
+
+#### 序列的增减赋值
+`a += b`和`a = a + b`虽然结果相同，但是过程不同。
+前者是`就地加法`，`a`会就地改动。而后者是先计算等号右边的得到一个全新的对象，然后赋值给`a`。
+
+```{python}
+>>> l = [1, 2, 3]
+>>> id(l)
+139765391606528
+>>> l *= 2
+>>> l
+[1, 2, 3, 1, 2, 3]
+>>> id(l)
+139765391606528
+>>> l = [1, 2, 3]
+>>> id(l)
+139765391606528
+>>> l
+[1, 2, 3]
+>>> l = l * 2
+>>> id(l)
+139765391685632
+```
+
+> 注意，因为元组不可变， 所以用上面两个方法都一样，等同于第二种
+
+有意思的是
+```
+>>> t = (1, 2, [20, 40])
+>>> t[2] += [30, 50]
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: 'tuple' object does not support item assignment
+>>> t
+(1, 2, [20, 40, 30, 50])
+
+```
+对元组中的列表进行增量赋值，因为元组的元素不可变。
+所以报错，但是事实上又改变了

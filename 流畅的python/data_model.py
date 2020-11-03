@@ -1,7 +1,7 @@
 '''
 Author: limbo1996
 Date: 2020-10-21 20:56:10
-LastEditTime: 2020-10-28 20:27:26
+LastEditTime: 2020-11-02 23:31:28
 FilePath: /learn_python/流畅的python/data_model.py
 '''
 
@@ -127,3 +127,75 @@ file
 a, b, *rest = range(5)
 
 a, b, rest
+
+
+s = 'bicycle'
+
+s[::3] #bye
+s[::-1]# elcycib
+s[::-2]# eccb
+
+
+# 对对象进行切片
+invoice = """
+0.....6.................................40...........52..55........
+1909  Pimoroni PiBrella                 $17.50       3   $52.50    
+1489  6mm Tactile Switch *20             $4.85       2    $9.90    
+1510  Panavise Jr. - PV-201             $28.00       1   $28.00    
+1601  PiTFT Mini Kit 320*240            $34.95       1   $34.95
+"""
+    
+line_items = invoice.split('\n')[2:]
+
+UNIT_PRICE = slice(40, 52)
+DESCRIPTION = slice(6, 40)
+
+for item in line_items:
+    print(item[UNIT_PRICE], item[DESCRIPTION])
+    
+    
+    
+# 给切片赋值
+
+l = list(range(10))
+
+l
+
+l[2:5] = [20, 30]
+l
+l[6:8] = [100]
+l
+
+
+# 列表推导式的应用
+board = [['_'] * 3 for i in range(3)]
+
+board
+# 以上代码等同于
+board = []
+for i in range(3):
+    row = ['_'] * 3
+    board.append(row)
+    
+board
+board[1][2] = '0'
+board
+
+# 与之相反，错误的是
+row = ['_'] * 3
+board = []
+for i in range(3):
+    board.append(row)
+    
+board
+board[1][2] = '2'
+board
+'''
+虽然board的结果相似，但是第二个是追加同一个对象三次到board
+单第一个是每次创建一个列表对象到board, 从更改某一行的某一个元素的结果就可以看出来
+'''
+
+
+>>> t = (1, 2, [20, 40])
+>>> t[2] += [30, 50]
+
