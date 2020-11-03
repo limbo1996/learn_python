@@ -1,7 +1,7 @@
 <!--
  * @Author: limbo1996
  * @Date: 2020-10-28 19:42:32
- * @LastEditTime: 2020-11-02 23:32:25
+ * @LastEditTime: 2020-11-03 15:40:12
  * @FilePath: /learn_python/流畅的python/data_model.md
 -->
 # Python 数据模型
@@ -373,3 +373,17 @@ TypeError: 'tuple' object does not support item assignment
 ```
 对元组中的列表进行增量赋值，因为元组的元素不可变。
 所以报错，但是事实上又改变了
+#### 排序
+`sorted`和`list.sort`的区别在于后者会将列表就地排序，而不会复制一个原列表。。
+而函数`sorted`会赋值原数据一份，新建一个列表作为返回值。虽然可输入不可变序列和生成器，但是他返回的还是列表。
+
+```{python}
+>>> test = ['a', 'c', 'd', 'b']
+>>> sorted(test)
+['a', 'b', 'c', 'd']
+>>> test
+['a', 'c', 'd', 'b']
+>>> test.sort()
+>>> test
+['a', 'b', 'c', 'd']
+```

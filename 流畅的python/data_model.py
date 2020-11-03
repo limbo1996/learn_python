@@ -1,7 +1,7 @@
 '''
 Author: limbo1996
 Date: 2020-10-21 20:56:10
-LastEditTime: 2020-11-02 23:31:28
+LastEditTime: 2020-11-03 15:39:54
 FilePath: /learn_python/流畅的python/data_model.py
 '''
 
@@ -199,3 +199,9 @@ board
 >>> t = (1, 2, [20, 40])
 >>> t[2] += [30, 50]
 
+test = ['a', 'c', 'd', 'b']
+
+sorted(test)
+test
+test.sort()
+test
